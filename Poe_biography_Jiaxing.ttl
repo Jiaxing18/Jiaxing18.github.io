@@ -1,0 +1,81 @@
+#This is a spatial biography of Edgar Allen Poe
+@prefix maps: <http://www.geographicknowledge.de/vocab/maps#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix xml: <http://www.w3.org/XML/1998/namespace>.
+@prefix dc: <http://purl.org/dc/elements/1.1/>.
+@prefix dbp: <http://dbpedia.org/page/>.
+@prefix dbp-ont: <http://dbpedia.org/ontology/>.
+@prefix dct: <http://purl.org/dc/terms/>.
+@prefix wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix wiki:<http://www.en.wikipedia.org/wiki/>.
+
+
+# Note that it is necessary to encode special symbols (e.g. ß) with UTF-8 hexadecimal unicode. 
+# e.g. dbo:birthName "Carl Friedrich Gau\uc39f";
+# see: http://www.w3.org/TR/turtle/  (Special characters) and http://www.utf8-zeichentabelle.de/unicode-utf8-table.pl?unicodeinhtml=hex
+# e.g.  using unicode brackets:
+#<http://dbpedia.org/resource/Tre_Kronor\u0028castle\u0029> rdfs:label "Tre Kronor(castle)". 
+
+dbp:Edgar_Allan_Poe dbp-ont:birthPlace dbp:Boston;
+foaf:name "Edgar Allan Poe";
+dbp-ont:birthDate "1809-01-19^^xsd:date";
+dbp-ont:deathPlace dbp:Baltimore ;
+dbp-ont:deathDate "1849-10-07^^xsd:date";
+dbp-ont:thumbnail <https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Edgar_Allan_Poe_1848.png/640px-Edgar_Allan_Poe_1848.png>;
+dbp-ont:spouse dbp:Virginia_Eliza_Clemm_Poe .
+dbp:Virginia_Eliza_Clemm_Poe foaf:name "Virginia Eliza Clemm Poe".
+
+dbp:Boston wgs84:geometry   "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(-71.058884 42.360081)"^^<http://www.opengis.net/ont/sf#wktLiteral>;
+rdfs:label "Boston".
+dbp:Baltimore wgs84:geometry   "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(-76.612190 39.290386)"^^<http://www.opengis.net/ont/sf#wktLiteral>;
+rdfs:label "Baltimore".
+
+<https://www.atlasobscura.com/places/edgar-allan-poe-s-grave> wgs84:geometry "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(-76.6232 39.2902)"^^<http://www.opengis.net/ont/sf#wktLiteral>;
+rdfs:label "The Grave of Edgar Allan Poe".
+
+#Note: Strings need to be in UNICODE
+dbp:Ligeia dbp-ont:author dbp:Edgar_Allan_Poe ;
+rdfs:label "Ligeia".
+dbp:The_raven dbp-ont:author dbp:Edgar_Allan_Poe ;
+rdfs:label "The raven". 
+dbp:The_Fall_of_the_House_of_Usher    dbp-ont:author dbp:Edgar_Allan_Poe ;
+rdfs:label "The Fall of the House of Usher".
+dbp:The_Murders_in_the_Rue_Morgue    dbp-ont:author dbp:Edgar_Allan_Poe ;
+rdfs:label "The Murders in the Rue Morgue".
+<https://www.poetryfoundation.org/poems/52829/a-dream-within-a-dream> dbp-ont:author dbp:Edgar_Allan_Poe ;
+rdfs:label "A dream within a dream".
+
+<https://literarydevices.net/literary-writing-style-of-edgar-allan-poe/> rdfs:label "The literary style of Allan Poe".
+
+dbp:Edgar_Allan_Poe dc:spatial dbp:Richmond, 
+dbp:London,
+dbp:University_of_Virginia,
+dbp:Fort_Moultrie,
+dbp:United_States_Military_Academy,
+<https://dbpedia.org/page/Petersburg,_Virginia>,
+dbp:Philadelphia,
+<https://dbpedia.org/page/Providence,_Rhode_Island>.
+
+dbp:Richmond wgs84:geometry "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(-77.434769 37.541290)"^^<http://www.opengis.net/ont/sf#wktLiteral>;
+rdfs:label "Adopted at Richmond".
+dbp:London wgs84:geometry "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(-0.118092 51.509865)"^^<http://www.opengis.net/ont/sf#wktLiteral>;
+rdfs:label "Studying at London".
+dbp:University_of_Virginia wgs84:geometry "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(-78.507980 38.033554)"^^<http://www.opengis.net/ont/sf#wktLiteral>;
+rdfs:label "Dorm at the University of Virginia".
+dbp:Fort_Moultrie wgs84:geometry "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(-79.8578633 32.7590658)"^^<http://www.opengis.net/ont/sf#wktLiteral>;
+rdfs:label "Militray service at Fort Moultrie".
+dbp:United_States_Military_Academy wgs84:geometry "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(-74.02831 41.3535187)"^^<http://www.opengis.net/ont/sf#wktLiteral>;
+rdfs:label "Military Academy at West Point".
+<https://dbpedia.org/page/Petersburg,_Virginia> wgs84:geometry "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(-77.401924 37.227928)"^^<http://www.opengis.net/ont/sf#wktLiteral>;
+rdfs:label "Honeymoon at Petersburg".
+dbp:Philadelphia wgs84:geometry "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(-75.165222 39.952583)"^^<http://www.opengis.net/ont/sf#wktLiteral>;
+rdfs:Philadelphia "Publishing works at Philadelphia".
+<https://dbpedia.org/page/Providence,_Rhode_Island> wgs84:geometry "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(-71.418884 41.825226)"^^<http://www.opengis.net/ont/sf#wktLiteral>;
+rdfs:label "Courting the poet Sarah Helen Whitman at Providence".
+
+
+
+
