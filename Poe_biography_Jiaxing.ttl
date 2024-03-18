@@ -69,11 +69,11 @@ dbp:Fort_Moultrie wgs84:geometry "<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
 rdfs:label "Militray service at Fort Moultrie".
 dbp:United_States_Military_Academy wgs84:geometry "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(-74.02831 41.3535187)"^^<http://www.opengis.net/ont/sf#wktLiteral>;
 rdfs:label "Military Academy at West Point".
-<https://dbpedia.org/page/Petersburg,_Virginia> wgs84:geometry "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(-77.401924 37.227928)"^^<http://www.opengis.net/ont/sf#wktLiteral>;
+dbp:Petersburg wgs84:geometry "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(-77.401924 37.227928)"^^<http://www.opengis.net/ont/sf#wktLiteral>;
 rdfs:label "Honeymoon at Petersburg".
 dbp:Philadelphia wgs84:geometry "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(-75.165222 39.952583)"^^<http://www.opengis.net/ont/sf#wktLiteral>;
 rdfs:Philadelphia "Publishing works at Philadelphia".
-<https://dbpedia.org/page/Providence,_Rhode_Island> wgs84:geometry "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(-71.418884 41.825226)"^^<http://www.opengis.net/ont/sf#wktLiteral>;
+dbp:Providence wgs84:geometry "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(-71.418884 41.825226)"^^<http://www.opengis.net/ont/sf#wktLiteral>;
 rdfs:label "Courting the poet Sarah Helen Whitman at Providence".
 
 
