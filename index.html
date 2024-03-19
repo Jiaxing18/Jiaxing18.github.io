@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset=utf-8 />
+	<title>Linked Biography of Edgar Allen Poe</title>
+	<!-- A client for displaying questions (SPARQL queries) about some person and retrieving and displaying answers from a SPARQL endpoint-->
+
+	<!--Loading the Leaflet library-->
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
+	<script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
+
+	<!--Loading JQuery (a generally useful JS library)-->
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+
+	<!--Loading the Mapbox library (background map service for leaflet)-->
+	<!--<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />		
+		<!-- Mapbox Stylesheets and Libraries -->
+	<!--<script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+	<link href='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.css' rel='stylesheet' />
+
+
+	<!-- These are the (own) javascript sources needed for the client-->
+	<!--<script src="js/rdfstore.js"></script> <!--The questions about the person as SPARQL queries-->
+	<!--<script src="js/questions.js"></script> <!--The questions about the person as SPARQL queries-->
+	<!--<script src="js/queries.js"></script> <!--The query methods-->
+	<!--<script src="js/mapinterface.js"></script> <!--The mapping methods-->
+	<link rel="stylesheet" href="style.css"><!--A stylesheet for this client-->
+	<!--<script src="js/init.js"></script> <!--The controller of everything-->
+	
+	<script src="bundle.js"></script> <!--The controller of everything-->
+
+
+</head>
+
+<script>
+	//Here starts the code that needs to be modified by you to pose questions to your RDF dataset (see instructions)
+
+	$(document).ready(function () {
+		/**
+		List of questions about some person (SPARQL queries together with common prefixes) posed to your RDF data file. 
+		**/
+
+		//This is the Web address where your RDF data file to be queried is located
+		//(needs to be edited by you!)
+		//var datasource = "<http://giv-lodum.uni-muenster.de/GIMA/biography.ttl>"
+		//var datasource = "<http://geographicknowledge.de/linkedbiography/biography.ttl>"
+
+		var datasource = "<https://jiaxing18.github.io/Poe_biography_Jiaxing.ttl>"
+
+
+		//Do not modify this
+		setDataSource(datasource);
+
+		//The list of used prefixes. Add only what you actually use in all your queries below. Note that if you use a prefix abbreviation that does not appear here, your query will not work.
+		// (may need to be edited by you!)
+		var prefixes = [];
+		prefixes.push({
+			"prefix": "maps",
+			"uri": "http://www.geographicknowledge.de/vocab/maps#"
+		});
+		prefixes.push({
+			"prefix": "rdfs",
+			"uri": "http://www.w3.org/2000/01/rdf-schema#"
+		});
+		prefixes.push({
+			"prefix": "dct",
+			"uri": "http://purl.org/dc/terms/"
+		});
+		prefixes.push({
+			"prefix": "dc",
+			"uri": "http://purl.org/dc/elements/1.1/"
+		});
+		prefixes.push({
+			"prefix": "foaf",
+			"uri": "http://xmlns.com/foaf/0.1/"
+		});
+		prefixes.push({
+			"prefix": "xsd",
+			"uri": "http://www.w3.org/2001/XMLSchema#"
+		});
+		prefixes.push({
+			"prefix": "geo",
+			"uri": "http://www.opengis.net/ont/geosparql#"
+		});
+		prefixes.push({
+			"prefix": "wgs84",
+			"uri": "http://www.w3.org/2003/01/geo/wgs84_pos#"
+		});
+		prefixes.push({
+			"prefix": "geo-1-0",
+			"uri": "http://www.opengis.net/ont/geosparql/1.0#"
+		});
+		prefixes.push({
+			"prefix": "dbp",
+			"uri": "http://dbpedia.org/page/"
+		});
+		prefixes.push({
+			"prefix": "dbp-ont",
+			"uri": "http://dbpedia.org/ontology/"
+		});
+
+
+		//Do not modify this
+		setPrefixes(prefixes);
+
+		//The URI address of the person of your biography (needs to be edited by you!)
+		var person_URI = "dbp:Edgar_Allan_Poe";
+
+		//Do not modify this
+		setPerson(person_URI);
+
+		//Retrieves an image (?person_picurl) and the name (?name) of this person. Modify this query if in your data set, you use other properties to link name/picture to the person
+		var about = "SELECT DISTINCT * WHERE {?person foaf:name ?name . ?person dbp-ont:thumbnail ?person_picurl.  FILTER(?person = " + person_URI + ")}";
+
+		//Do not modify this
+		setAbout(about)
+
+		//These are your questions about this person.
+		// To make this work: the first result variable contains the answers to your question (?person, ?place, ?work, ...), ?name should denote its name, and ?geometry its spatial WKT literal (may be POINT or POLYGON). Always use ?name to display names and ?geometry to display geometries (is automatically parsed)
+		//(needs to be edited by you!)
+		var queries = [];
+		queries.push({
+			"sparql": "SELECT " +
+				"?date ?place ?geometry ?name " +
+				"WHERE {" +
+				"dbp:Edgar_Allan_Poe dbp-ont:birthDate ?date ; dbp-ont:birthPlace ?place . ?place rdfs:label ?name . ?place wgs84:geometry ?geometry . " +
+				"}",
+			"question": "When and where was Edgar Allen Poe born?"
+		});
+		queries.push({
+			"sparql": "SELECT " +
+				"?date ?place ?geometry ?name " +
+				"WHERE {" +
+				"dbp:Edgar_Allan_Poe dbp-ont:deathDate ?date ; dbp-ont:deathPlace ?place . ?place rdfs:label ?name . ?place wgs84:geometry ?geometry . " +
+				"}",
+			"question": "When and where was Edgar Allen Poe dead?"
+		});
+		queries.push({
+			"sparql": "SELECT " +
+				" ?description ?geometry ?name " +
+				"WHERE {" +
+				"<https://www.atlasobscura.com/places/edgar-allan-poe-s-grave> wgs84:geometry ?geometry ; rdfs:label ?name . ?description rdfs:label ?name ." +
+				"}",
+			"question": "Where was Edgar Allen Poe buried?"
+		});
+		queries.push({
+			"sparql": "SELECT " +
+				"?work ?name " +
+				"WHERE {" +
+				"?work dbp-ont:author dbp:Edgar_Allan_Poe  . ?work rdfs:label ?name .  " +
+				"}",
+			"question": "What are the significant works of Edgar Allen Poe?"
+		});
+		queries.push({
+			"sparql": "SELECT " +
+				"?place ?geometry ?name " +
+				"WHERE {" +
+				"dbp:Edgar_Allan_Poe dc:spatial ?place  . ?place rdfs:label ?name . ?place wgs84:geometry ?geometry . " +
+				"}",
+			"question": "Where are the principal places of residence of Edgar Allen Poe?"
+		});
+		queries.push({
+			"sparql": "SELECT " +
+				"?description ?name" +
+				"WHERE {" +
+				"<https://literarydevices.net/literary-writing-style-of-edgar-allan-poe/> rdfs:label ?name . ?description rdfs:label ?name ." +
+				"}",
+			"question": "How to define the style of the works of Edgar Allen Poe?"
+		});
+
+
+
+
+
+
+
+		//Do not modify this
+		setQueries(queries);
+	});
+</script>
+
+<body>
+	<div id="navBar">
+		<div id="nav_title">
+			Linked Biography of <div id="person"></div>
+		</div>
+		<img id="img_person" src=""></img>
+		<audio id="music" autoplay="autoplay" loop="loop" src="The Conqueror Worm II.mp3"></audio>
+		<img id="img_music" onclick="musicplay()" src="music.svg">
+		<div id='source'> Source: <br></div>
+
+	</div>
+
+
+
+
+
+
+	<div id="Mapcontainer">
+	</div>
+
+	<div id="QuestionAnswer">
+		Question: <img id="img_next" title="Next question" src="next.svg"></img>
+		<div id="Question">
+		</div>
+		<div id="AnswerTable">
+			<div style="width: 100%; height: 20px; overflow: hidden; padding: 12px">
+				Answers (<a id="resultsnumber">0</a>):
+			</div>
+			<div id="result" style="width : 100%">
+			</div>
+
+		</div>
+	</div>
+
+</body>
+<script>
+	var Bmusic = document.getElementById("music")
+	var img_music = document.getElementById("img_music")
+	var term = true
+
+
+	function musicplay() {
+
+		if (term == false) {
+			Bmusic.play()
+			term = true
+			document.getElementById("img_music").style.animationPlayState = 'running'
+		} else {
+			Bmusic.pause()
+			term = false
+			document.getElementById("img_music").style.animationPlayState = 'paused'
+		}
+	}
+</script>
+</html>
